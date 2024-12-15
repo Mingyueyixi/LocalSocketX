@@ -1,0 +1,59 @@
+apply {
+    plugin 'com.android.library'
+    plugin 'org.jetbrains.kotlin.android'
+    from rootProject.file('props.gradle')
+    from rootProject.file('publish.gradle')
+}
+android {
+    namespace 'com.lu.local.socketx'
+    compileSdk COMPILE_SDK_VERSION.toInteger()
+    defaultConfig {
+        minSdk MIN_SDK_VERSION.toInteger()
+        targetSdk TARGET_SDK_VERSION.toInteger()
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+    }
+
+    buildTypes {
+//        debug {
+//            debuggable true
+//            minifyEnabled false
+//            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+        release {
+            debuggable false
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+//    viewBinding {
+//        enabled = false
+//    }
+
+    //4.1以上新的写法
+    buildFeatures {
+        //不要打包BuildConfig文件
+        buildConfig = false
+//        resValues = false
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+    testImplementation deps['junit:junit']
+    androidTestImplementation deps['androidx.test.ext:junit']
+    androidTestImplementation deps['androidx.test.espresso:espresso-core']
+}

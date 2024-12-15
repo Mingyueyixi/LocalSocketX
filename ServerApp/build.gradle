@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply {
+    from rootProject.file('props.gradle')
+}
+
+android {
+    namespace 'com.lu.ata.server'
+    compileSdk COMPILE_SDK_VERSION.toInteger()
+
+    defaultConfig {
+        applicationId "com.lu.ata.server"
+        minSdk MIN_SDK_VERSION.toInteger()
+        targetSdk TARGET_SDK_VERSION.toInteger()
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "int", "VERSION_CODE", "${versionCode}"
+        buildConfigField "String", "VERSION_NAME", "\"${versionName}\""
+    }
+//    sourceSets {
+//        main{
+//            resources{
+//                srcDir("src/main/reouserces")
+//            }
+//        }
+//    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-rules-debug.pro'
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    viewBinding {
+        enabled = true
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+    implementation project(':core')
+}
