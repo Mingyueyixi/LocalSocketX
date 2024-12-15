@@ -64,7 +64,9 @@ public class AtaMessageParser {
         for (int i = 0; i < bin.length; i++) {
             byte b = bin[i];
             if (b == '\n' && i + 1 < bin.length) {
+                // head end
                 if (bin[i + 1] == '\n') {
+                    // split line
                     headLen = i;
                     break;
                 }
@@ -74,7 +76,7 @@ public class AtaMessageParser {
         byte[] headBytes = new byte[headLen];
 
         // headLen index为分割符，headLen +1 为body 起始index
-        int bodyStartIndex = headLen + 1;
+        int bodyStartIndex = headLen + 2;
         int bodyLength = bin.length - bodyStartIndex;
         byte[] bodyBytes = new byte[bodyLength];
         System.arraycopy(bin, 0, headBytes, 0, headLen);
